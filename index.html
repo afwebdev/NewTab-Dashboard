@@ -32,12 +32,14 @@
         </ul>
     </nav>
 
-    <div class="greeting">
-        <h1 id="greeting">Hello, Andrew</h1>
-    </div>
-    <div class="timeInfo">
-        <h1 id="time">...</h1>
-        <p id="date">...</p>
+    <div class="clockDateGreet">
+        <div class="greeting">
+            <h1 id="greeting">Hello, Andrew</h1>
+        </div>
+        <div class="timeInfo">
+            <h1 id="time">...</h1>
+            <p id="date">...</p>
+        </div>
     </div>
 </header>
 
@@ -45,14 +47,27 @@
     <div class="container">
 
         <div id="weather">
-            <h2>Weather</h2>
-            <span id ="temp">Temp: 9°c</span>
-            <span id="feelsLike">Feels Like: 9°c</span>
-            <span id="weatherImg"></span>
+            <div class="weatherText">
+                <h2>Weather</h2>
+                <span>Temperature</span>
+                <span id="temp"></span>
+                <span>Feels Like</span>
+                <span id="feelsLike"></span>
+            </div>
+            <div class="weatherIcon">
+                <span id="weatherImg"></span>
+            </div>
         </div>
 
         <div id="news">
             <h2>News</h2>
+            <ul>
+                <li><a href="#">Example headline blah</a></li>
+                <li><a href="#">Example headline blah</a></li>
+                <li><a href="#">Example headline blah</a></li>
+                <li><a href="#">Example headline blah</a></li>
+                <li><a href="#">Example headline blah</a></li>
+            </ul>
         </div>
 
     </div>

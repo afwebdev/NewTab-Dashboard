@@ -23,14 +23,14 @@ document.addEventListener('DOMContentLoaded', function (event) {
  
  
      //Time/Date Magic.
-     //Start a new interval, updating ever 1000ms (1s), run myTimer
+     //Start a new interval, updating every 1000ms (1s), run
      setInterval(function () {
-         myTimer();
+         refreshClock();
      }, 1000);
  
-     function myTimer() {
+     function refreshClock() {
          let d = new Date();
-         document.getElementById("time").innerHTML = d.toLocaleTimeString([], {
+         document.getElementById("time").innerText = d.toLocaleTimeString([], {
              hour: '2-digit',
              minute: '2-digit'
          });
@@ -50,15 +50,34 @@ document.addEventListener('DOMContentLoaded', function (event) {
  
  
      //  Weather
-     const getWeather = () => {
+
+      
+     //used as a callback to getWeather function. 
+     //This function will be used to write to the DOM.
+     const writeWeather = (data) => {
+        //Do DOM Stuff here
+        let newData = data[0];
+
+        let current = newData.current;
+        let feelsLike = newData.feelsLike;
+        let icon = newData.icon;
+        let iconHTML = `<img src="http://${icon}" alt="weatherIcon">`
+
+        document.getElementById('temp').innerText = `${current} °c`;
+        document.getElementById('feelsLike').innerText = `${feelsLike} °c`;
+        document.getElementById('weatherImg').innerHTML = iconHTML;
+
+    };
+
+     const getWeather = (callback) => {
  
          const weatherArray = [];
          const weatherURL = 'http://api.apixu.com/v1/current.json?key=';
          const weatherKey = "45639ca029744489ae4221129192004";
-         const searchTerm = 'L7G6C8';
+         const searchTerm = 'Georgetown Canada';
  
          //returns a response of a readable stream,
-         fetch(`${weatherURL}${weatherKey}&q=${searchTerm}`)
+         return fetch(`${weatherURL}${weatherKey}&q=${searchTerm}`)
              //read that readable stream using .json, which will deliver a promise.
              .then(response => response.json())
              //read the promise now with another .then call, and do work.
@@ -74,19 +93,13 @@ document.addEventListener('DOMContentLoaded', function (event) {
                      icon: curWeatherIcon
                  });
                  
-                 writeWeather(weatherArray)
- 
+                 callback(weatherArray); 
              })
              .catch(error => console.log('ERROR! **** INFO! \n\n', error));
  
      };
  
-    getWeather();
- 
-     const writeWeather = (data) => {
-         
-         console.log(data[0].current);
-     }
+    getWeather(writeWeather);
      
      
  });
